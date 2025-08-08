@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/insert-new-customer.yaml
+  - include:
+      file:  db/changelog/sql/insert-customer.sql
+#      relativeToChangelogFile: true

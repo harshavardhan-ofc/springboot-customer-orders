@@ -1,0 +1,55 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_order_db
+    username: postgres
+    password: Harsha@123
+#    url: ${DB_URL}
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+
+#        spring:
+#          datasource:
+#            url: jdbc:postgresql://localhost:5432/customer_order_db
+#            username: postgres
+#            password: Harsha@123
+#databaseChangeLog:
+#  - changeSet:
+#      id: 100
+#      author: Harsha
+#      changes:
+#        - insert:
+#            tableName: customer
+#            columns:
+#              - column:
+#                  name: name
+#                  value: "Ravi Kumar"
+#              - column:
+#                  name: email
+#                  value: "ravi.kumar@example.com"
