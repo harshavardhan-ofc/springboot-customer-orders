@@ -22,8 +22,8 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_DB: customerdb
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Harsha@123
         options: >-
           --health-cmd="pg_isready"
           --health-interval=10s
