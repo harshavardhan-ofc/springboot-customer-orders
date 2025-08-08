@@ -3,12 +3,32 @@ name: Build with Maven
 on:
   push:
     branches:
-      - master  # Trigger on pushes to master branch
+      - master
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: customer_order_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Harsha@123
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customer_order_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Harsha@123
 
     steps:
       - name: Checkout code
@@ -17,11 +37,15 @@ jobs:
       - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
           java-version: '21'
+          distribution: 'temurin'
 
-      - name: Grant execute permission for Maven Wrapper
-        run: chmod +x ./mvnw
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
 
-      - name: Build with Maven using CI profile
-        run: ./mvnw clean install -Dspring.profiles.active=ci
+      - name: Build with Maven
+        run: mvn clean install -Dspring.profiles.active=ci
