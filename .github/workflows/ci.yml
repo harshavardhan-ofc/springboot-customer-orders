@@ -38,7 +38,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '21'
-          distribution: 'temurin'
+          distribution: 'zulu'
 
       - name: Set up PostgreSQL driver
         run: sudo apt-get install -y libpq-dev

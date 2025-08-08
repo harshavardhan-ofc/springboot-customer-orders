@@ -2,11 +2,8 @@ package com.project.customer.orders.service.impl;
 import com.project.customer.orders.dto.OrderDTO;
 import com.project.customer.orders.entity.Customer;
 import com.project.customer.orders.entity.Order;
-import com.project.customer.orders.exception.ResourceNotFoundException;
 import com.project.customer.orders.repository.CustomerRepository;
-import com.project.customer.orders.repository.OrderRepository;
 import com.project.customer.orders.service.CustomerService;
-import com.project.customer.orders.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +34,8 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customer = customerRepository.findById(customerId);
         return customer.orElse(null);
     }
-
     @Override
     public Customer saveCustomer(Customer customer) {
-        // Set 'customer' in each order to ensure foreign key is correctly saved
         if (customer.getOrders() != null) {
             for (Order order : customer.getOrders()) {
                 order.setCustomer(customer);
