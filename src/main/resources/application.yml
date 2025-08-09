@@ -6,9 +6,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/customer_order_db
     username: postgres
     password: Harsha@123
-#    url: ${DB_URL}
-#    username: ${DB_USERNAME}
-#    password: ${DB_PASSWORD}
 
     driver-class-name: org.postgresql.Driver
 
@@ -32,24 +29,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-
-#        spring:
-#          datasource:
-#            url: jdbc:postgresql://localhost:5432/customer_order_db
-#            username: postgres
-#            password: Harsha@123
-#databaseChangeLog:
-#  - changeSet:
-#      id: 100
-#      author: Harsha
-#      changes:
-#        - insert:
-#            tableName: customer
-#            columns:
-#              - column:
-#                  name: name
-#                  value: "Ravi Kumar"
-#              - column:
-#                  name: email
-#                  value: "ravi.kumar@example.com"
