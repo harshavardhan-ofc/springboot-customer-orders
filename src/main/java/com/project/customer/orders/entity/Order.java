@@ -1,24 +1,22 @@
 package com.project.customer.orders.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "orders")
 @Data
-@Table(name="customer_orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productName;
+    private String product;
+    private Integer quantity;
+    private LocalDateTime orderDate;
 
-    private Double amount;
-
-    @ManyToOne
-    @JoinColumn(name="customer_id")
-    @JsonIgnoreProperties("orders")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 }

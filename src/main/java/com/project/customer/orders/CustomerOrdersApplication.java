@@ -1,13 +1,12 @@
+// CustomerOrdersApplication.java
 package com.project.customer.orders;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
-
+public class CustomerOrdersApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(CustomerOrdersApplication.class, args);
 	}
-
 }
