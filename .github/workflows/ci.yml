@@ -14,9 +14,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: customer_order_db       # Database name inside the container
-          POSTGRES_USER: postgres    # Username for PostgreSQL
-          POSTGRES_PASSWORD: Harsha@123 # Password for PostgreSQL
+          POSTGRES_DB: customer_order_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Harsha@123
         ports:
           - 5432:5432
         options: >-
