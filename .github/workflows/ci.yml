@@ -24,6 +24,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        volumes:
+          # Mount your init.sql so Postgres runs it at startup
+          - ./src/test/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
 
     env:
       DB_URL: jdbc:postgresql://localhost:5432/customer_order_db
