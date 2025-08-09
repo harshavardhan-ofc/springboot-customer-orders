@@ -14,9 +14,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: testdb          # Database name inside the container
-          POSTGRES_USER: testuser      # Username for PostgreSQL
-          POSTGRES_PASSWORD: testpassword  # Password for PostgreSQL
+          POSTGRES_DB: customer_order_db       # Database name inside the container
+          POSTGRES_USER: postgres    # Username for PostgreSQL
+          POSTGRES_PASSWORD: Harsha@123 # Password for PostgreSQL
         ports:
           - 5432:5432
         options: >-
@@ -26,9 +26,9 @@ jobs:
           --health-retries 5
 
     env:
-      DB_URL: jdbc:postgresql://localhost:5432/testdb
-      DB_USERNAME: testuser
-      DB_PASSWORD: testpassword
+      DB_URL: jdbc:postgresql://localhost:5432/customer_order_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: Harsha@123
 
     steps:
       - name: Checkout code
