@@ -59,12 +59,29 @@ jobs:
             sleep 2
           done
 
-      - name: Build with Maven and run tests (Liquibase runs automatically)
+      - name: Build Spring Boot jar without tests
+        run: mvn clean package -DskipTests
+
+      - name: Start Spring Boot app in background
+        run: nohup java -jar target/*.jar --spring.profiles.active=ci &
+
+      - name: Wait for Spring Boot to start
+        run: |
+          for i in {1..30}; do
+            curl --fail http://localhost:8080/actuator/health && echo "App is up!" && break
+            echo "Waiting for Spring Boot to start..."
+            sleep 2
+          done
+
+      - name: Run health check endpoint
+        run: curl --fail http://localhost:8080/actuator/health
+
+      - name: Run tests with Maven
         env:
           SPRING_DATASOURCE_URL: ${{ env.SPRING_DATASOURCE_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ env.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ env.SPRING_DATASOURCE_PASSWORD }}
-        run: mvn clean verify -Dspring.profiles.active=ci
+        run: mvn test -Dspring.profiles.active=ci
 
       - name: Upload Surefire test reports (always run, even on failure)
         if: always()
@@ -72,12 +89,3 @@ jobs:
         with:
           name: surefire-reports
           path: target/surefire-reports/
-
-      - name: Wait for Spring Boot to start
-        run: |
-          echo "Waiting for Spring Boot to initialize..."
-          sleep 20
-
-      - name: Run Health Check Endpoint
-        run: |
-          curl --fail http://localhost:8080/actuator/health
