@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+    <!-- 🔹 Changeset 1 - Create table only if it doesn't exist -->
+    <changeSet id="1-create-customer-table" author="harsha">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="customer"/>
+            </not>
+        </preConditions>
+        <createTable tableName="customer">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- 🔹 Changeset 2 - Insert sample data only if table is empty -->
+    <changeSet id="2-insert-sample-data" author="harsha" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM customer
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="customer">
+            <column name="name" value="Sample Customer 1"/>
+            <column name="email" value="customer1@example.com"/>
+        </insert>
+        <insert tableName="customer">
+            <column name="name" value="Sample Customer 2"/>
+            <column name="email" value="customer2@example.com"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
